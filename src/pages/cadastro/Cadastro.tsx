@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function Cadastro() {
     return (
 
@@ -89,8 +91,16 @@ function Cadastro() {
                         >
                             Cadastrar
                         </button>
-                    </div>
 
+                        <div className="text-center mt-2 border-t border-slate-700/50 pt-4">
+                            <p className="text-slate-400 font-normal text-sm">
+                                Já tem uma conta?{' '}
+                                <Link to="/" className="text-teal-400 font-bold hover:text-teal-300 hover:underline">
+                                    Faça login
+                                </Link>
+                            </p>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
