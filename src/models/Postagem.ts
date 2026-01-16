@@ -1,5 +1,5 @@
-import type Tema from "./tema";
-import type Usuario from "./usuario";
+import type Tema from "./Tema";
+import type Usuario from "./Usuario";
 
 export default interface Postagem {
     id: number;
