@@ -35,7 +35,7 @@ function Navbar() {
                             <Link to='/temas' className='hover:underline'>Temas</Link>
                         </div>
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
-                            Cadastrar tema
+                            <Link to='/cadastrartema' className='hover:underline'>Cadastrar tema</Link>
                         </div>
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
                             Perfil

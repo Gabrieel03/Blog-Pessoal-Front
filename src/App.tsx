@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/home/home";
-import Cadastro from "./pages/cadastro/Cadastro";
-import Login from "./pages/login/Login";
-import { AuthProvider } from "./contexts/AuthContext";
+import FormTema from "./components/tema/formtema/FormTema";
 import ListaTemas from "./components/tema/listatema/ListaTema";
+import { AuthProvider } from "./contexts/AuthContext";
+import Cadastro from "./pages/cadastro/Cadastro";
+import Home from "./pages/home/home";
+import Login from "./pages/login/Login";
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/temas" element={<ListaTemas />} />
+              <Route path="/cadastrartema" element={<FormTema />} />
+              <Route path="/editartema/:id" element={<FormTema />} />
             </Routes>
           </div>
           <Footer />

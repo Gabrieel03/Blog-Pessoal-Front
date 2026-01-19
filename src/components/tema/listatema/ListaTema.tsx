@@ -57,7 +57,7 @@ async function buscarTemas() {
             </h2>
             
             <button 
-              onClick={() => navigate('/cadastroTema')}
+              onClick={() => navigate('/cadastrartema')}
               className="rounded bg-teal-500 text-slate-900 font-bold py-3 px-6 hover:bg-teal-400 hover:scale-105 transition-all shadow-lg shadow-teal-500/40"
             >
               Novo Tema
