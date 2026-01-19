@@ -19,13 +19,17 @@ function Home() {
                                 Nova Postagem
                             </button>
                         </div>
+
+                        <button className="rounded border-2 border-slate-100 py-3 px-8 font-bold hover:bg-slate-100 hover:text-slate-900 transition-all">
+                            Ver Postagens
+                        </button>
                     </div>
 
                     <div className="flex justify-center items-center p-4">
                         <img
                             src="https://i.imgur.com/fyfri1v.png"
                             alt="Imagem da Página Home"
-                            className="w-2/3 md:w-3/4 drop-shadow-2xl hover:scale-105 transition-transform duration-500" // Adiciona sombra e leve movimento
+                            className="w-2/3 md:w-3/4 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                         />
                     </div>
 

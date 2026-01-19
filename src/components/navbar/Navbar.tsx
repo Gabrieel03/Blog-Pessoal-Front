@@ -32,7 +32,7 @@ function Navbar() {
                             Postagens
                         </div>
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
-                            Temas
+                            <Link to='/temas' className='hover:underline'>Temas</Link>
                         </div>
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
                             Cadastrar tema
