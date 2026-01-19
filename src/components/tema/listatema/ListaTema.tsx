@@ -16,11 +16,11 @@ const [temas, setTemas] = useState<Tema[]>([]);
 
 const { usuario, handleLogout } = useContext(AuthContext);
 const token = usuario.token;
-console.log(usuario);
+
 
 useEffect(() => {
   if (token === '') {
-    alert ('Você precisa estar logado45!');
+    alert ('Você precisa estar logado!');
     navigate('/')
   }
 }, [token])
