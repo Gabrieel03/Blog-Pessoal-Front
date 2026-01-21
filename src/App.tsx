@@ -8,6 +8,7 @@ import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/home";
 import Login from "./pages/login/Login";
 import DeletarTema from "./components/tema/deletartema/DeletarTema";
+import ListaPostagens from "./components/postagem/listapostagem/ListaPostagem";
 
 
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/cadastrartema" element={<FormTema />} />
               <Route path="/editartema/:id" element={<FormTema />} />
               <Route path="/deletartema/:id" element={<DeletarTema />} />
+              <Route path="/postagens" element={<ListaPostagens />} />
             </Routes>
           </div>
           <Footer />

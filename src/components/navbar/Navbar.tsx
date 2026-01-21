@@ -29,20 +29,25 @@ function Navbar() {
                     <div className='flex gap-8 font-medium'>
 
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
-                            Postagens
+                            <Link to='/postagens' className='hover:underline'>Postagens</Link>
                         </div>
+
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
                             <Link to='/temas' className='hover:underline'>Temas</Link>
                         </div>
+
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
                             <Link to='/cadastrartema' className='hover:underline'>Cadastrar tema</Link>
                         </div>
+
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
                             Perfil
                         </div>
+
                         <div className='cursor-pointer hover:text-red-400 hover:underline underline-offset-4 transition-all'>
                             <Link to = '' onClick={logout} className="hover: underline">Sair</Link>
                         </div>
+                        
                     </div>
                 </div>
             </div>
