@@ -31,7 +31,7 @@ function CardPostagem({ post }: CardPostagemProps) {
           {post.titulo}
         </h4>
 
-        <p className='text-slate-300 leading-relaxed text-sm'>
+        <p className='text-slate-300 leading-relaxed text-sm whitespace-pre-wrap'>
           {post.texto}
         </p>
 
@@ -53,12 +53,12 @@ function CardPostagem({ post }: CardPostagemProps) {
 
       {/* Botões de Ação */}
       <div className="flex w-full">
-        <Link to={`/editarPostagem/${post.id}`} className='w-full'>
+        <Link to={`/editarpostagem/${post.id}`} className='w-full'>
           <button className='w-full text-white bg-sky-600 hover:bg-sky-500 flex items-center justify-center py-3 font-bold transition-colors'>
             Editar
           </button>
         </Link>
-        <Link to={`/deletarPostagem/${post.id}`} className='w-full'>
+        <Link to={`/deletarpostagem/${post.id}`} className='w-full'>
           <button className='w-full text-white bg-red-600 hover:bg-red-500 flex items-center justify-center py-3 font-bold transition-colors'>
             Deletar
           </button>

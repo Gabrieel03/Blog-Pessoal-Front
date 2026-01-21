@@ -1,13 +1,12 @@
-import {  useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 import { buscar, atualizar, cadastrar } from "../../../services/Service";
-import { SyncLoader } from "react-spinners"; // Certifique-se de ter instalado: npm install react-spinners
+import { SyncLoader } from "react-spinners";
 import type Tema from "../../../models/Tema";
 import type Postagem from "../../../models/Postagem";
 
-// Interface opcional caso use dentro de um Modal
 interface FormPostagemProps {
     closeModal?: () => void;
 }
@@ -48,7 +47,11 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
 
     async function buscarPostagemPorId(id: string) {
         try {
-            await buscar(`/postagens/${id}`, setPostagem, {
+            // CORREÇÃO 1: Usamos uma função manual aqui para atualizar Postagem E Tema ao mesmo tempo
+            await buscar(`/postagens/${id}`, (dados: Postagem) => {
+                setPostagem(dados);
+                setTema(dados.tema || { id: 0, descricao: "" }); // Garante que o tema seja carregado no Select
+            }, {
                 headers: { Authorization: token }
             })
         } catch (error: any) {
@@ -81,11 +84,21 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
         });
     }
 
+    // CORREÇÃO 2: Nova função específica para o Textarea (ele tem tipagem diferente do Input)
+    function atualizarEstadoTextArea(e: ChangeEvent<HTMLTextAreaElement>) {
+        setPostagem({
+            ...postagem,
+            [e.target.name]: e.target.value,
+            tema: tema,
+            usuario: usuario,
+        });
+    }
+
     function retornar() {
         if (closeModal) {
-            closeModal(); // Fecha o modal se estiver sendo usado como tal
+            closeModal();
         } else {
-            navigate('/postagens'); // Ou volta para a lista
+            navigate('/postagens');
         }
     }
 
@@ -110,6 +123,8 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
             if (error.toString().includes('403')) {
                 handleLogout();
             } else {
+                // Mostra o erro real no console para ajudar a depurar se persistir
+                console.error(error);
                 alert('Erro ao processar a Postagem');
             }
         }
@@ -118,20 +133,17 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
     }
 
     return (
-        // Container Principal: Garante o fundo escuro (slate-900) e centralização
         <div className="flex flex-col items-center justify-center mx-auto w-full min-h-[80vh] bg-slate-900 py-8 px-4">
-            
+
             <h1 className="text-4xl text-center text-white font-bold mb-8">
                 {id !== undefined ? 'Editar' : 'Cadastrar'} <span className="text-teal-500">Postagem</span>
             </h1>
 
-            {/* O Card do Formulário */}
-            <form 
-                className="w-full max-w-2xl flex flex-col gap-6 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 shadow-2xl" 
+            <form
+                className="w-full max-w-2xl flex flex-col gap-6 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 shadow-2xl"
                 onSubmit={gerarNovaPostagem}
             >
 
-                {/* Input Título */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="titulo" className="text-slate-300 text-sm uppercase tracking-wider font-semibold">
                         Título da Postagem
@@ -147,34 +159,35 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
                     />
                 </div>
 
-                {/* Input Texto */}
+                {/* CORREÇÃO 3: Trocamos INPUT por TEXTAREA */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="texto" className="text-slate-300 text-sm uppercase tracking-wider font-semibold">
                         Texto da Postagem
                     </label>
-                    <input
+                    <textarea
                         value={postagem.texto || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-                        type="text"
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => atualizarEstadoTextArea(e)}
                         placeholder="Descreva aqui o conteúdo..."
                         name="texto"
                         required
-                        className="rounded p-4 bg-slate-900 border border-slate-700 placeholder-slate-500 text-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none transition-all"
+                        rows={5} // Define altura inicial de 5 linhas
+                        className="rounded p-4 bg-slate-900 border border-slate-700 placeholder-slate-500 text-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none transition-all resize-none"
                     />
                 </div>
 
-                {/* Select de Tema */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="tema" className="text-slate-300 text-sm uppercase tracking-wider font-semibold">
                         Tema da Postagem
                     </label>
-                    <select 
-                        name="tema" 
-                        id="tema" 
-                        className='rounded p-4 bg-slate-900 border border-slate-700 text-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none transition-all cursor-pointer appearance-none' 
+                    <select
+                        name="tema"
+                        id="tema"
+                        className='rounded p-4 bg-slate-900 border border-slate-700 text-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none transition-all cursor-pointer appearance-none'
                         onChange={(e) => buscar(`/temas/${e.currentTarget.value}`, setTema, { headers: { Authorization: token } })}
+                        // CORREÇÃO 4: Forçamos o select a mostrar o valor correto do estado 'tema'
+                        value={tema.id || ''}
                     >
-                        <option value="" selected disabled>Selecione um Tema</option>
+                        <option value="" disabled>Selecione um Tema</option>
                         {temas.map((tema) => (
                             <option key={tema.id} value={tema.id} className="bg-slate-800 text-white py-2">
                                 {tema.descricao}
@@ -183,16 +196,15 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
                     </select>
                 </div>
 
-                {/* Botões de Ação */}
                 <div className="flex justify-between gap-4 mt-4">
-                     <button
+                    <button
                         type="button"
                         onClick={retornar}
                         className="w-1/2 rounded bg-slate-700 py-3 font-bold text-slate-200 hover:bg-red-500 hover:text-white transition-all shadow-md"
                     >
                         Cancelar
                     </button>
-                    
+
                     <button
                         type='submit'
                         className="w-1/2 rounded bg-teal-500 text-slate-900 font-bold py-3 flex justify-center items-center hover:bg-teal-400 hover:scale-[1.02] transition-all shadow-lg shadow-teal-500/30"
