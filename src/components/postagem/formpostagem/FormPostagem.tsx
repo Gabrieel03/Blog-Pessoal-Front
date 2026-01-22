@@ -5,6 +5,7 @@ import { buscar, atualizar, cadastrar } from "../../../services/Service";
 import { SyncLoader } from "react-spinners";
 import type Tema from "../../../models/Tema";
 import type Postagem from "../../../models/Postagem";
+import { ToastAlert } from "../../../utils/ToastAlert";
 
 
 function FormPostagem() {
@@ -103,12 +104,12 @@ function FormPostagem() {
                 await atualizar(`/postagens`, postagem, setPostagem, {
                     headers: { Authorization: token, },
                 });
-                alert('Postagem atualizada com sucesso');
+                ToastAlert('Postagem atualizada com sucesso!', 'sucesso')
             } else {
                 await cadastrar(`/postagens`, postagem, setPostagem, {
                     headers: { Authorization: token, },
                 });
-                alert('Postagem cadastrada com sucesso');
+                ToastAlert('Postagem cadastrada com sucesso!', 'sucesso')
             }
             retornar();
         } catch (error: any) {
@@ -117,7 +118,7 @@ function FormPostagem() {
             } else {
                 // Mostra o erro real no console para ajudar a depurar se persistir
                 console.error(error);
-                alert('Erro ao processar a Postagem');
+                ToastAlert('Erro ao processar a Postagem!', 'erro')
             }
         }
 
