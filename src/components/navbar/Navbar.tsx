@@ -41,7 +41,7 @@ function Navbar() {
                         </div>
 
                         <div className='cursor-pointer hover:text-teal-400 hover:underline underline-offset-4 transition-all'>
-                            Perfil
+                            <Link to='/perfil' className='hover:underline'>Perfil</Link>
                         </div>
 
                         <div className='cursor-pointer hover:text-red-400 hover:underline underline-offset-4 transition-all'>
