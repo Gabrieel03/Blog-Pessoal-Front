@@ -1,24 +1,20 @@
 import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
-
 import { buscar, atualizar, cadastrar } from "../../../services/Service";
 import { SyncLoader } from "react-spinners";
 import type Tema from "../../../models/Tema";
 import type Postagem from "../../../models/Postagem";
 
-interface FormPostagemProps {
-    closeModal?: () => void;
-}
 
-function FormPostagem({ closeModal }: FormPostagemProps) {
+function FormPostagem() {
 
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [temas, setTemas] = useState<Tema[]>([]);
 
-    const [tema, setTema] = useState<Tema>({ id: 0, descricao: "" });
+    const [tema, setTema] = useState<Tema>({ id: 0, descricao: '', });
     const [postagem, setPostagem] = useState<Postagem>({} as Postagem);
 
     const { id } = useParams<{ id: string }>();
@@ -39,7 +35,7 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
                 headers: { Authorization: token }
             })
         } catch (error: any) {
-            if (error.toString().includes('403')) {
+            if (error.toString().includes('401')) {
                 handleLogout()
             }
         }
@@ -55,7 +51,7 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
                 headers: { Authorization: token }
             })
         } catch (error: any) {
-            if (error.toString().includes('403')) {
+            if (error.toString().includes('401')) {
                 handleLogout()
             }
         }
@@ -95,11 +91,7 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
     }
 
     function retornar() {
-        if (closeModal) {
-            closeModal();
-        } else {
-            navigate('/postagens');
-        }
+        navigate('/postagens');
     }
 
     async function gerarNovaPostagem(e: ChangeEvent<HTMLFormElement>) {
@@ -130,7 +122,10 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
         }
 
         setIsLoading(false);
+        retornar();
     }
+
+    const carregarTema = tema.descricao === ''
 
     return (
         <div className="flex flex-col items-center justify-center mx-auto w-full min-h-[80vh] bg-slate-900 py-8 px-4">
@@ -208,10 +203,13 @@ function FormPostagem({ closeModal }: FormPostagemProps) {
                     <button
                         type='submit'
                         className="w-1/2 rounded bg-teal-500 text-slate-900 font-bold py-3 flex justify-center items-center hover:bg-teal-400 hover:scale-[1.02] transition-all shadow-lg shadow-teal-500/30"
-                        disabled={isLoading}
+                        disabled={carregarTema || isLoading}
                     >
                         {isLoading ? (
-                            <SyncLoader color="#0f172a" size={8} margin={4} speedMultiplier={0.7} />
+                            <SyncLoader color="#0f172a"
+                             size={8} 
+                             margin={4} 
+                             speedMultiplier={0.7} />
                         ) : (
                             <span>{id !== undefined ? 'Atualizar' : 'Cadastrar'}</span>
                         )}

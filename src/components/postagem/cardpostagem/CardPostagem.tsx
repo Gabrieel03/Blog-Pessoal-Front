@@ -13,7 +13,7 @@ function CardPostagem({ post }: CardPostagemProps) {
       {/* Cabeçalho do Card: Foto e Nome */}
       <div className='flex items-center gap-4 py-3 px-4 bg-slate-900 border-b border-slate-700'>
         <img
-          src={post.usuario?.foto || "https://i.imgur.com/HeOe814.png"}
+          src={post.usuario?.foto || "https://wallpapers.com/images/hd/fotos-do-itachi-uchiha-s41b4za7y3desnav.jpg"}
           alt="Foto do Usuário"
           className='h-12 w-12 rounded-full object-cover border-2 border-teal-500 p-0.5'
         />
