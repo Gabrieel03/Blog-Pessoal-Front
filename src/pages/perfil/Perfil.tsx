@@ -17,8 +17,7 @@ function Perfil() {
         }
     }, [usuario.token])
 
-    const fotoPerfil = usuario.foto && usuario.foto !== "" ? usuario.foto : "https://i.imgur.com/HeOe814.png";
-    const fotoCapa = "https://i.imgur.com/P67N08R.jpg";
+    const fotoCapa = "https://i.imgur.com/ZZFAmzo.jpg";
 
 
     return (
@@ -43,7 +42,7 @@ function Perfil() {
         <div className="flex justify-center -mt-24 relative z-10 mb-6">
            <img 
              className="rounded-full w-44 h-44 object-cover border-[6px] border-slate-900 shadow-xl ring-4 ring-teal-500" 
-             src={fotoPerfil} 
+             src={usuario.foto}
              alt={`Foto de perfil de ${usuario.nome}`} 
            />
         </div>

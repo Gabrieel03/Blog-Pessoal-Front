@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom'
 import type Postagem from '../../../models/Postagem'
+import { AuthContext } from '../../../contexts/AuthContext';
+import { useContext } from 'react';
 
 interface CardPostagemProps {
   post: Postagem
 }
 
 function CardPostagem({ post }: CardPostagemProps) {
-
+  
+  const {usuario} = useContext(AuthContext);
+  
   return (
     <div className='flex flex-col rounded-xl overflow-hidden justify-between bg-slate-800 border border-slate-700 shadow-lg hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-300 hover:-translate-y-1'>
 
@@ -14,12 +18,12 @@ function CardPostagem({ post }: CardPostagemProps) {
       <div className='flex items-center gap-4 py-3 px-4 bg-slate-900 border-b border-slate-700'>
         <img
           src={post.usuario?.foto || "https://wallpapers.com/images/hd/fotos-do-itachi-uchiha-s41b4za7y3desnav.jpg"}
-          alt="Foto do Usuário"
+          alt={`Foto de ${post.usuario?.nome}`}
           className='h-12 w-12 rounded-full object-cover border-2 border-teal-500 p-0.5'
         />
         <div className="flex flex-col">
           <h3 className='text-md font-bold text-white uppercase tracking-wide'>
-            {post.usuario?.nome}
+            {usuario.nome}
           </h3>
         </div>
       </div>
