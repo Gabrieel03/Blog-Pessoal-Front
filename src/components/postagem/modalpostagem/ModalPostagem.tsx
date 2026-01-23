@@ -34,7 +34,6 @@ function ModalPostagem() {
           </div>
 
           <div className="px-6 pb-6">
-            <FormPostagem closeModal={close} />
           </div>
 
         </div>
