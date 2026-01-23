@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ListaPostagens from "../../components/postagem/listapostagem/ListaPostagem";
 import ModalPostagem from "../../components/postagem/modalpostagem/ModalPostagem";
 
@@ -22,7 +23,7 @@ function Home() {
                         </div>
 
                         <button className="rounded border-2 border-slate-100 py-3 px-8 font-bold hover:bg-slate-100 hover:text-slate-900 transition-all">
-                            Ver Postagens
+                           <Link to='/postagens' className='hover:underline'>Ver Postagens</Link>
                         </button>
                     </div>
 
